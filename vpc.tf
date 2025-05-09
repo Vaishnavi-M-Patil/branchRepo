@@ -25,3 +25,51 @@ resource "aws_subnet" "pub_subnet" {
     }
 }
 
+resource "aws_internet_gateway" "myigw" {
+  vpc_id = aws_vpc.myVpc.id
+}
+
+resource "aws_route_table" "myroute" {
+  vpc_id = aws_vpc.myVpc.id
+  tags = {
+    name = "myvpc-route-table"
+  }
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.myigw.id
+  }
+}
+
+resource "aws_route_table_association" "subnet_asso" {
+  subnet_id = aws_subnet.pub_subnet.id
+  route_table_id = aws_route_table.myroute.id
+}
+
+resource "aws_security_group" "newSecuritygrp" {
+  name = "newSecGroup"
+  vpc_id = aws_vpc.myVpc.id
+  tags = {
+    name = "myVpc-security-group"
+  }
+  ingress {
+    description = "HTTP"
+    from_port = 80
+    to_port   = 80
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]    
+  }
+  ingress {
+    description = "SSH"
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]    
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"              # -1 means all traffic
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+}
