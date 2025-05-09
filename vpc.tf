@@ -16,7 +16,7 @@ resource "aws_subnet" "pvt_subnet" {
 }
 
 resource "aws_subnet" "pub_subnet" {
-    cidr_block = "10.0.0.348/25"
+    cidr_block = "10.0.0.128/25"
     vpc_id = aws_vpc.myVpc.id
     map_public_ip_on_launch = true
     tags = {
