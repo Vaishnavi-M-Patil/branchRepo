@@ -9,5 +9,10 @@ terraform {
 
 provider "aws" {
   # Configuration options
-  region = "us-east-1"
+  region = var.region
+}
+
+#create variable block for region
+variable "region" {
+  default = "us-east-1"
 }

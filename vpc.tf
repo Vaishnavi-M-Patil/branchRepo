@@ -1,3 +1,14 @@
+
+#take backup of terraform.tfstate file.
+#Bucket must already be created.
+terraform {
+  backend "s3" {
+    region = "us-east-1"
+    bucket = "my-tf-bucket12335644"
+    key = "terraform.tfstate"
+  }
+}
+
 # create vpc
 resource "aws_vpc" "myVpc" {
     cidr_block = "10.0.0.0/16"
@@ -90,4 +101,8 @@ resource "aws_security_group" "newSecuritygrp" {
     protocol    = "-1"              # -1 means all traffic
     cidr_blocks = ["0.0.0.0/0"]
   }
+}
+
+output "aws_instance" {
+  value = aws_instance.pubInst.public_ip
 }
