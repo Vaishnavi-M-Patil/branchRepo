@@ -1,1 +1,1 @@
-### Terraform configiration files are stored in this repository
+### Terraform configuration files are stored in this repository
