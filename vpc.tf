@@ -1,4 +1,3 @@
-
 #take backup of terraform.tfstate file.
 #Bucket must already be created.
 terraform {
